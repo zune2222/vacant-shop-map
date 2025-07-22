@@ -255,13 +255,13 @@
           15,
           16
         ],
-        "status": "in-progress",
+        "status": "done",
         "subtasks": []
       }
     ],
     "metadata": {
       "created": "2025-07-22T05:08:42.681Z",
-      "updated": "2025-07-22T09:08:01.665Z",
+      "updated": "2025-07-22T09:13:40.656Z",
       "description": "Tasks for master context"
     }
   }

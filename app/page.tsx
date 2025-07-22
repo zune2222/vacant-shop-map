@@ -1,18 +1,18 @@
 "use client";
 
 import { useEffect, useState, useCallback, useMemo } from "react";
-import Header from "@/components/Header";
+import { Header, HeaderSpacer } from "@/components/common";
 import MapContainer from "@/components/Map/MapContainer";
 import MarkerManager from "@/components/Map/MarkerManager";
 import CurrentLocationButton from "@/components/Map/CurrentLocationButton";
-import TestButton from "@/components/TestButton";
+
 import {
   FilterButton,
   FilterPanel,
   FilterLoadingState,
 } from "@/components/Filter";
 import { BottomSheet, ShopDetail } from "@/components/BottomSheet";
-import { ApiErrorState, NetworkStatusIndicator } from "@/components/common";
+import { ApiErrorState } from "@/components/common";
 import { useBottomSheetStore } from "@/store/bottomSheetStore";
 import { useFilterStore } from "@/store/filterStore";
 import { useInitialLocation } from "@/hooks/useInitialLocation";
@@ -164,7 +164,7 @@ export default function HomePage() {
 
     // debouncedFetchShops는 이미 디바운스된 함수이므로 바로 호출
     debouncedFetchShops(appliedFilters);
-  }, [appliedFilters, isMounted]); // debouncedFetchShops를 dependency에서 제거
+  }, [appliedFilters, isMounted, debouncedFetchShops]); // 의존성 배열에 debouncedFetchShops 추가
 
   /**
    * 마커 클릭 핸들러 (간단하고 안전한 버전)
@@ -189,7 +189,7 @@ export default function HomePage() {
       }
       applyFilters(newFilters);
     },
-    [applyFilters, filters]
+    [applyFilters] // filters 의존성 제거 (실제로 사용되지 않음)
   );
 
   /**
@@ -228,7 +228,8 @@ export default function HomePage() {
   if (!isMounted) {
     return (
       <div className="flex flex-col h-screen bg-gray-50">
-        <Header title="공실 상가 지도" />
+        <Header />
+        <HeaderSpacer />
         <main className="flex-1 flex items-center justify-center">
           <LoadingState message="앱을 초기화하는 중..." size="lg" />
         </main>
@@ -240,7 +241,8 @@ export default function HomePage() {
   if (loading && !shops.length) {
     return (
       <div className="flex flex-col h-screen bg-gray-50">
-        <Header title="공실 상가 지도" />
+        <Header />
+        <HeaderSpacer />
         <main className="flex-1 flex items-center justify-center">
           <LoadingState message="상가 정보를 불러오는 중..." size="lg" />
         </main>
@@ -252,7 +254,8 @@ export default function HomePage() {
   if ((error || apiError) && !shops.length) {
     return (
       <div className="flex flex-col h-screen bg-gray-50">
-        <Header title="공실 상가 지도" />
+        <Header />
+        <HeaderSpacer />
         <main className="flex-1 flex items-center justify-center p-4">
           <ApiErrorState
             title={
@@ -277,8 +280,9 @@ export default function HomePage() {
 
   return (
     <div className="flex flex-col h-screen bg-gray-50">
-      {/* Header with Network Status */}
-      <Header title="공실 상가 지도" />
+      {/* Header with Logo */}
+      <Header />
+      <HeaderSpacer />
 
       {/* Main Map Area */}
       <main className="flex-1 overflow-hidden relative">
@@ -305,13 +309,12 @@ export default function HomePage() {
           onError={handleLocationError}
         />
 
-        {/* Shops Counter with Location Status and Network Status */}
+        {/* Shops Counter */}
         <div className="absolute bottom-4 left-4 bg-white rounded-lg shadow-lg p-3 z-10 max-w-xs">
           <div className="flex items-center justify-between mb-2">
             <div className="text-sm font-medium text-gray-700">
               📍 {memoizedShops.length}개의 공실 상가
             </div>
-            <NetworkStatusIndicator />
           </div>
 
           {!isDefaultFilter() && (
@@ -353,9 +356,6 @@ export default function HomePage() {
             </div>
           )}
         </div>
-
-        {/* Test Button (임시) */}
-        <TestButton />
 
         {/* Filter Loading Overlay */}
         {filterLoading && <FilterLoadingState />}

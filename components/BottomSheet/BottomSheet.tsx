@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, ReactNode, useState } from "react";
+import { useRef, useEffect, ReactNode, useState, useCallback } from "react";
 import { motion, PanInfo, useAnimation, AnimatePresence } from "framer-motion";
 import {
   useBottomSheetStore,
@@ -76,20 +76,23 @@ export default function BottomSheet({
   }, []);
 
   /**
-   * 높이별 transform 값 계산 (translateY)
+   * 높이별 transform 값 계산 (translateY) - 메모화로 무한 루프 방지
    */
-  const getTransformForHeight = (targetHeight: BottomSheetHeight): string => {
-    switch (targetHeight) {
-      case "collapsed":
-        return "translateY(100%)"; // 완전히 숨김
-      case "partial":
-        return `translateY(calc(100% - ${snapPoints.partial}px))`; // 부분적으로 표시
-      case "full":
-        return `translateY(calc(100% - ${snapPoints.full}px))`; // 거의 전체 화면
-      default:
-        return `translateY(calc(100% - ${snapPoints.partial}px))`;
-    }
-  };
+  const getTransformForHeight = useCallback(
+    (targetHeight: BottomSheetHeight): string => {
+      switch (targetHeight) {
+        case "collapsed":
+          return "translateY(100%)"; // 완전히 숨김
+        case "partial":
+          return `translateY(calc(100% - ${snapPoints.partial}px))`; // 부분적으로 표시
+        case "full":
+          return `translateY(calc(100% - ${snapPoints.full}px))`; // 거의 전체 화면
+        default:
+          return `translateY(calc(100% - ${snapPoints.partial}px))`;
+      }
+    },
+    [snapPoints.partial, snapPoints.full]
+  ); // snapPoints 의존성 추가
 
   /**
    * 드래그 종료 핸들러
@@ -175,7 +178,15 @@ export default function BottomSheet({
           clearShopId(); // 애니메이션 완료 후 shopId 초기화
         });
     }
-  }, [isOpen, height, controls, setAnimating, snapPoints, clearShopId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    isOpen,
+    height,
+    controls,
+    getTransformForHeight,
+    // snapPoints 제거 - getTransformForHeight의 의존성으로 관리됨
+    // setAnimating, clearShopId 제거 - Zustand 스토어 함수들은 안정적 (무한 루프 방지)
+  ]); // 무한 루프 방지를 위한 최소한의 의존성만 유지
 
   // 높이를 최대값으로 고정 (transform으로만 위치 조절)
   const fixedHeight = Math.max(snapPoints.full, windowHeight * 0.9);

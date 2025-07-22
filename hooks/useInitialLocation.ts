@@ -61,10 +61,17 @@ export const useInitialLocation = ({
     [onError]
   );
 
+  // 현재 감지 상태를 ref로 추적 (무한 루프 방지)
+  const isDetectingRef = useRef(false);
+
   // 초기 위치 감지 함수
   const detectInitialLocation = useCallback(async () => {
     // 이미 초기화되었거나 감지 중이면 중단
-    if (hasInitialized.current || state.isDetecting || !enableAutoDetection) {
+    if (
+      hasInitialized.current ||
+      isDetectingRef.current ||
+      !enableAutoDetection
+    ) {
       return;
     }
 
@@ -78,6 +85,7 @@ export const useInitialLocation = ({
     try {
       isCancelledRef.current = false;
       hasInitialized.current = true; // 중복 실행 방지
+      isDetectingRef.current = true; // ref로 감지 상태 추적
 
       setState((prev) => ({ ...prev, isDetecting: true, error: null }));
 
@@ -93,6 +101,7 @@ export const useInitialLocation = ({
       // 권한이 거부된 경우 조용히 종료
       if (permission === "denied") {
         console.log("📍 위치 권한이 거부되어 있습니다. 기본 위치 사용.");
+        isDetectingRef.current = false; // ref 상태 업데이트
         setState((prev) => ({
           ...prev,
           isDetecting: false,
@@ -133,6 +142,7 @@ export const useInitialLocation = ({
       // 스토어 상태 업데이트
       setCenter(newCenter);
 
+      isDetectingRef.current = false; // ref 상태 업데이트
       setState((prev) => ({
         ...prev,
         isDetecting: false,
@@ -153,6 +163,7 @@ export const useInitialLocation = ({
           ? error.message
           : "위치 정보를 가져올 수 없습니다.";
 
+      isDetectingRef.current = false; // ref 상태 업데이트
       setState((prev) => ({
         ...prev,
         isDetecting: false,
@@ -179,7 +190,7 @@ export const useInitialLocation = ({
     memoizedOnError,
     setCenter,
     mapInstance,
-    state.isDetecting, // 이것만 state에서 참조
+    // state.isDetecting 제거됨 - isDetectingRef로 대체
   ]);
 
   // 초기 위치 감지 시도 - mapInstance가 준비되면 한 번만 실행
@@ -195,9 +206,10 @@ export const useInitialLocation = ({
 
   // 수동으로 위치 감지 재시도
   const retryDetection = useCallback(async () => {
-    if (state.isDetecting) return;
+    if (isDetectingRef.current) return; // ref로 상태 확인
 
     hasInitialized.current = false; // 재시도를 위해 초기화 플래그 리셋
+    isDetectingRef.current = true; // ref 상태 업데이트
 
     try {
       setState((prev) => ({
@@ -227,6 +239,7 @@ export const useInitialLocation = ({
 
       setCenter(newCenter);
 
+      isDetectingRef.current = false; // ref 상태 업데이트
       setState((prev) => ({
         ...prev,
         isDetecting: false,
@@ -242,6 +255,7 @@ export const useInitialLocation = ({
           ? error.message
           : "위치 정보를 가져올 수 없습니다.";
 
+      isDetectingRef.current = false; // ref 상태 업데이트
       setState((prev) => ({
         ...prev,
         isDetecting: false,
@@ -253,7 +267,7 @@ export const useInitialLocation = ({
       }
     }
   }, [
-    state.isDetecting,
+    // state.isDetecting 제거됨 - isDetectingRef로 대체
     timeout,
     mapInstance,
     setCenter,

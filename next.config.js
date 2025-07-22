@@ -2,7 +2,6 @@
 const nextConfig = {
   // Next.js 14 최적화
   experimental: {
-    appDir: true,
     optimizeCss: true,
     optimizePackageImports: ["@headlessui/react", "framer-motion"],
   },

@@ -12,8 +12,8 @@ export function useDebounce<T extends (...args: any[]) => void>(
 ): T {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  return useCallback(
-    ((...args: Parameters<T>) => {
+  const debouncedCallback = useCallback(
+    (...args: Parameters<T>) => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
@@ -21,9 +21,11 @@ export function useDebounce<T extends (...args: any[]) => void>(
       timeoutRef.current = setTimeout(() => {
         callback(...args);
       }, delay);
-    }) as T,
+    },
     [callback, delay]
   );
+
+  return debouncedCallback as T;
 }
 
 /**
@@ -35,16 +37,18 @@ export function useThrottle<T extends (...args: any[]) => void>(
 ): T {
   const lastCallRef = useRef<number>(0);
 
-  return useCallback(
-    ((...args: Parameters<T>) => {
+  const throttledCallback = useCallback(
+    (...args: Parameters<T>) => {
       const now = Date.now();
       if (now - lastCallRef.current >= delay) {
         lastCallRef.current = now;
         callback(...args);
       }
-    }) as T,
+    },
     [callback, delay]
   );
+
+  return throttledCallback as T;
 }
 
 /**
@@ -320,14 +324,7 @@ export function useOptimizedMarkers(
     return optimized;
   }, [
     shops,
-    visibilityOptions.bounds?.north,
-    visibilityOptions.bounds?.south,
-    visibilityOptions.bounds?.east,
-    visibilityOptions.bounds?.west,
-    visibilityOptions.currentZoom,
-    visibilityOptions.centerLat,
-    visibilityOptions.centerLng,
-    visibilityOptions.maxMarkers,
+    visibilityOptions, // 전체 객체를 의존성에 포함
   ]);
 }
 

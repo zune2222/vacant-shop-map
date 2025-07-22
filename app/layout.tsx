@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import ErrorBoundary from "@/components/ErrorBoundary";
-import OfflineNotification from "@/components/common/OfflineNotification";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -10,7 +9,7 @@ export const metadata: Metadata = {
   title: "공실 상가 지도 | 빈 상가 정보 검색",
   description:
     "전국의 공실 상가 정보를 지도에서 쉽게 찾아보세요. 임대료, 면적, 업종별 필터링 지원",
-  keywords: "공실상가, 빈상가, 상가임대, 상가정보, 지도검색",
+  keywords: "공실상가, 빈상가, 상가임대, 상가정보, 지도검색, 상가검색, 부동산",
   authors: [{ name: "Vacant Shop Map Team" }],
   creator: "Vacant Shop Map",
   publisher: "Vacant Shop Map",
@@ -25,6 +24,15 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  icons: {
+    icon: [
+      { url: "/logo.png", sizes: "32x32", type: "image/png" },
+      { url: "/logo.png", sizes: "16x16", type: "image/png" },
+    ],
+    apple: "/logo.png",
+    shortcut: "/logo.png",
+  },
+  manifest: "/site.webmanifest",
   openGraph: {
     title: "공실 상가 지도",
     description: "전국의 공실 상가 정보를 지도에서 쉽게 찾아보세요",
@@ -34,10 +42,10 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "공실 상가 지도 미리보기",
+        url: "/logo.png",
+        width: 800,
+        height: 800,
+        alt: "공실 상가 지도 - 상가와 돋보기 로고",
       },
     ],
   },
@@ -45,7 +53,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "공실 상가 지도",
     description: "전국의 공실 상가 정보를 지도에서 쉽게 찾아보세요",
-    images: ["/og-image.png"],
+    images: ["/logo.png"],
   },
   robots: {
     index: true,
@@ -90,14 +98,6 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <ErrorBoundary>
-          {/* 오프라인 상태 알림 (전역) */}
-          <OfflineNotification
-            position="top"
-            showReconnectButton={true}
-            autoHide={true}
-            autoHideDelay={3000}
-          />
-
           {/* 메인 애플리케이션 콘텐츠 */}
           <div className="min-h-screen">{children}</div>
         </ErrorBoundary>
