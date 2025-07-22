@@ -1,1 +1,0 @@
-{"success":true,"data":{"status":"healthy","timestamp":"2025-07-22T09:50:09.992Z","version":"0.1.0","environment":"production","uptime":0.378045625,"services":{"api":"healthy","database":"mocked","maps":"healthy"}}}

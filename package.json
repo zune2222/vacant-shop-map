@@ -13,7 +13,6 @@
     "preview": "npm run build && npm run start",
     "export": "npm run build && next export",
     "clean": "rm -rf .next out",
-    "postbuild": "next-sitemap",
     "vercel-build": "npm run build"
   },
   "dependencies": {
