@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { SAMPLE_VACANT_SHOPS, filterVacantShops } from "@/lib/sampleData";
 import { MapFilter } from "@/types";
 
+// 동적 라우트 설정 (searchParams 사용으로 인한 prerender 에러 해결)
+export const dynamic = "force-dynamic";
+
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;

@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { SAMPLE_VACANT_SHOPS } from "@/lib/sampleData";
 
+// 동적 라우트 설정 (params 사용으로 인한 prerender 에러 해결)
+export const dynamic = "force-dynamic";
+
 export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }
