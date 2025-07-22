@@ -2,7 +2,7 @@
 const nextConfig = {
   // Next.js 14 최적화
   experimental: {
-    optimizeCss: true,
+    // optimizeCss: true, // critters 모듈 의존성 문제로 임시 비활성화
     optimizePackageImports: ["@headlessui/react", "framer-motion"],
   },
 
