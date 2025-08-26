@@ -94,9 +94,9 @@ export function getFilterSummary(filter: MapFilter): string {
   if (filter.shopTypes.length < 4) {
     const typeLabels = filter.shopTypes.map((type) => {
       switch (type) {
-        case "restaurant":
+        case "korean_restaurant":
           return "음식점";
-        case "retail":
+        case "convenience_store":
           return "소매";
         case "office":
           return "사무실";

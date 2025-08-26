@@ -1,5 +1,4 @@
 import { ShopType } from "./VacantShop";
-import { BottomSheetHeight } from "./BottomSheet";
 
 /**
  * 공실 상가 관련 타입들
@@ -13,10 +12,10 @@ export type {
   UpdateVacantShopData,
 } from "./VacantShop";
 
-export { 
-  SHOP_TYPE_LABELS, 
-  SHOP_TYPE_COLORS, 
-  SHOP_TYPE_GROUPS 
+export {
+  SHOP_TYPE_LABELS,
+  SHOP_TYPE_COLORS,
+  SHOP_TYPE_GROUPS,
 } from "./VacantShop";
 
 /**
@@ -61,23 +60,6 @@ export {
 } from "./MapFilter";
 
 /**
- * 바텀시트 관련 타입들
- */
-export type {
-  BottomSheetHeight,
-  BottomSheetState,
-  BottomSheetActions,
-  BottomSheetGesture,
-} from "./BottomSheet";
-
-export {
-  INITIAL_BOTTOM_SHEET_STATE,
-  BOTTOM_SHEET_HEIGHT_CLASSES,
-  BOTTOM_SHEET_HEIGHT_VALUES,
-  BOTTOM_SHEET_THRESHOLDS,
-} from "./BottomSheet";
-
-/**
  * 지도 관련 타입들
  */
 export type {
@@ -103,24 +85,43 @@ export {
 export const isValidShopType = (type: string): type is ShopType => {
   const validTypes: ShopType[] = [
     // 음식점
-    "korean_restaurant", "chinese_restaurant", "japanese_restaurant", "western_restaurant",
-    "fastfood", "cafe", "bakery", "chicken", "pizza", "pub",
-    // 소매업  
-    "convenience_store", "clothing", "cosmetics", "electronics", "pharmacy",
-    "supermarket", "bookstore", "toy_store", "flower_shop",
+    "korean_restaurant",
+    "chinese_restaurant",
+    "japanese_restaurant",
+    "western_restaurant",
+    "fastfood",
+    "cafe",
+    "bakery",
+    "chicken",
+    "pizza",
+    "pub",
+    // 소매업
+    "convenience_store",
+    "clothing",
+    "cosmetics",
+    "electronics",
+    "pharmacy",
+    "supermarket",
+    "bookstore",
+    "toy_store",
+    "flower_shop",
     // 서비스업
-    "hair_salon", "nail_salon", "fitness", "laundry", "repair_shop",
-    "real_estate", "insurance", "bank", "clinic",
+    "hair_salon",
+    "nail_salon",
+    "fitness",
+    "laundry",
+    "repair_shop",
+    "real_estate",
+    "insurance",
+    "bank",
+    "clinic",
     // 업무공간
-    "office", "coworking", "academy", "consulting",
+    "office",
+    "coworking",
+    "academy",
+    "consulting",
     // 기타
-    "etc"
+    "etc",
   ];
   return validTypes.includes(type as ShopType);
-};
-
-export const isValidBottomSheetHeight = (
-  height: string
-): height is BottomSheetHeight => {
-  return ["collapsed", "partial", "full"].includes(height);
 };

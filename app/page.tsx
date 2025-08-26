@@ -11,9 +11,9 @@ import {
   FilterPanel,
   FilterLoadingState,
 } from "@/components/Filter";
-import { BottomSheet, ShopDetail } from "@/components/BottomSheet";
+import { ShopDetail } from "@/components/BottomSheet";
 import { ApiErrorState } from "@/components/common";
-import { useBottomSheetStore } from "@/store/bottomSheetStore";
+import { useShopModalStore } from "@/store/bottomSheetStore";
 import { useFilterStore } from "@/store/filterStore";
 import { useInitialLocation } from "@/hooks/useInitialLocation";
 import { getShops } from "@/lib/api";
@@ -41,7 +41,7 @@ export default function HomePage() {
   const [apiError, setApiError] = useState<any>(null);
 
   // Bottom sheet store
-  const { openSheet } = useBottomSheetStore();
+  const { openModal } = useShopModalStore();
 
   // Filter store
   const {
@@ -182,9 +182,9 @@ export default function HomePage() {
       if (process.env.NODE_ENV === "development") {
         console.log("🎯 Marker clicked:", id);
       }
-      openSheet(id);
+      openModal(id);
     },
-    [openSheet]
+    [openModal]
   );
 
   /**
@@ -324,7 +324,7 @@ export default function HomePage() {
               <div className="flex items-center space-x-2">
                 <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
                   <svg
-                    className="w-5 h-5 text-white"
+                    className="w-5 h-5 text-black"
                     fill="currentColor"
                     viewBox="0 0 24 24"
                   >
@@ -409,10 +409,8 @@ export default function HomePage() {
         )}
       </main>
 
-      {/* Bottom Sheet Integration */}
-      <BottomSheet>
-        <ShopDetail />
-      </BottomSheet>
+      {/* Shop Detail Modal */}
+      <ShopDetail />
     </div>
   );
 }

@@ -12,8 +12,8 @@ const SHOP_TYPE_OPTIONS: Array<{
   label: string;
   icon: string;
 }> = [
-  { value: "restaurant", label: "음식점", icon: "🍽️" },
-  { value: "retail", label: "소매", icon: "🛍️" },
+  { value: "korean_restaurant", label: "음식점", icon: "🍽️" },
+  { value: "convenience_store", label: "소매", icon: "🛍️" },
   { value: "office", label: "사무실", icon: "🏢" },
   { value: "etc", label: "기타", icon: "📦" },
 ];

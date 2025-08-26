@@ -45,13 +45,17 @@ export const DynamicShopTypeSelector = dynamic(
   }
 );
 
-// BottomSheet 내부 컴포넌트들 - 마커 클릭 시에만 로드
+// ShopDetail 컴포넌트 - 마커 클릭 시에만 로드
 export const DynamicShopDetail = dynamic(
   () => import("@/components/BottomSheet/ShopDetail"),
   {
     loading: () => (
-      <div className="p-4">
-        <ShopDetailSkeleton />
+      <div className="fixed inset-0 z-50 overflow-y-auto bg-black/50 flex items-center justify-center p-4">
+        <div className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden">
+          <div className="p-4">
+            <ShopDetailSkeleton />
+          </div>
+        </div>
       </div>
     ),
     ssr: false,
@@ -74,15 +78,6 @@ export const DynamicCurrentLocationButton = dynamic(
     loading: () => (
       <div className="absolute bottom-24 right-4 w-12 h-12 bg-white rounded-full shadow-lg animate-pulse" />
     ),
-    ssr: false,
-  }
-);
-
-// BottomSheet 전체 - 마커 클릭 시에만 로드
-export const DynamicBottomSheet = dynamic(
-  () => import("@/components/BottomSheet/BottomSheet"),
-  {
-    loading: () => null, // 바텀시트는 애니메이션이 있으므로 로딩 UI 불필요
     ssr: false,
   }
 );

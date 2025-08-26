@@ -3,7 +3,6 @@
 import { useEffect, useCallback, useRef, useState } from "react";
 import Supercluster from "supercluster";
 import { useMapStore } from "@/store/mapStore";
-// import { useBottomSheetStore } from "@/store/bottomSheetStore"; // 제거
 import { VacantShop, SHOP_TYPE_COLORS } from "@/types";
 
 interface MarkerManagerProps {
@@ -68,9 +67,6 @@ export default function MarkerManager({
     setHoveredMarkerId,
     clearAllMarkers,
   } = useMapStore();
-
-  // 바텀시트 스토어 제거 - props의 onMarkerClick 사용
-  // const { openSheet } = useBottomSheetStore();
 
   // Supercluster 인스턴스
   const supercluster = useRef<Supercluster>(
