@@ -1,9 +1,39 @@
 import { NextRequest, NextResponse } from "next/server";
-import { SAMPLE_VACANT_SHOPS, filterVacantShops } from "@/lib/sampleData";
-import { MapFilter } from "@/types";
+import { ENHANCED_SAMPLE_SHOPS } from "@/lib/enhancedSampleData";
+import { MapFilter, EnhancedVacantShop, ShopType } from "@/types";
 
 // 동적 라우트 설정 (searchParams 사용으로 인한 prerender 에러 해결)
 export const dynamic = "force-dynamic";
+
+/**
+ * 확장된 공실 상가 데이터 필터링
+ */
+function filterEnhancedVacantShops(
+  shops: EnhancedVacantShop[],
+  filter: MapFilter
+): EnhancedVacantShop[] {
+  return shops.filter((shop) => {
+    // 임대료 범위 필터
+    if (
+      shop.monthlyRent < filter.rentRange[0] * 10000 ||
+      shop.monthlyRent > filter.rentRange[1] * 10000
+    ) {
+      return false;
+    }
+
+    // 면적 범위 필터
+    if (shop.area < filter.areaRange[0] || shop.area > filter.areaRange[1]) {
+      return false;
+    }
+
+    // 상가 유형 필터
+    if (!filter.shopTypes.includes(shop.shopType as any)) {
+      return false;
+    }
+
+    return true;
+  });
+}
 
 export async function GET(request: NextRequest) {
   try {
@@ -30,17 +60,46 @@ export async function GET(request: NextRequest) {
         parseInt(searchParams.get("areaMin") || "0"),
         parseInt(searchParams.get("areaMax") || "100"),
       ],
-      shopTypes: (searchParams.get("shopTypes")?.split(",") as any) || [
-        "restaurant",
-        "retail",
+      shopTypes: (searchParams.get("shopTypes")?.split(",") as ShopType[]) || [
+        "korean_restaurant",
+        "chinese_restaurant", 
+        "japanese_restaurant",
+        "western_restaurant",
+        "fastfood",
+        "cafe",
+        "bakery",
+        "chicken",
+        "pizza",
+        "pub",
+        "convenience_store",
+        "clothing",
+        "cosmetics",
+        "electronics",
+        "pharmacy",
+        "supermarket",
+        "bookstore",
+        "toy_store",
+        "flower_shop",
+        "hair_salon",
+        "nail_salon",
+        "fitness",
+        "laundry",
+        "repair_shop",
+        "real_estate",
+        "insurance",
+        "bank",
+        "clinic",
         "office",
-        "etc",
+        "coworking",
+        "academy",
+        "consulting",
+        "etc"
       ],
       region: searchParams.get("region") || undefined,
     };
 
     // 데이터 필터링
-    let shops = filterVacantShops(SAMPLE_VACANT_SHOPS, filter);
+    let shops = filterEnhancedVacantShops(ENHANCED_SAMPLE_SHOPS, filter);
 
     // 정렬 적용
     if (sortBy) {

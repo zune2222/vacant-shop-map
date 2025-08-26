@@ -13,7 +13,7 @@ export const SAMPLE_VACANT_SHOPS: VacantShop[] = [
     area: 15,
     monthlyRent: 180,
     deposit: 1000,
-    shopType: "restaurant",
+    shopType: "cafe",
     images: [
       "https://via.placeholder.com/400x300/f0f0f0/333333?text=카페+전경",
       "https://via.placeholder.com/400x300/f8f8f8/333333?text=내부+모습",
@@ -36,7 +36,7 @@ export const SAMPLE_VACANT_SHOPS: VacantShop[] = [
     area: 25,
     monthlyRent: 250,
     deposit: 1500,
-    shopType: "retail",
+    shopType: "clothing",
     images: [
       "https://via.placeholder.com/400x300/e0e0e0/333333?text=매장+외관",
     ],
@@ -76,7 +76,7 @@ export const SAMPLE_VACANT_SHOPS: VacantShop[] = [
     area: 20,
     monthlyRent: 200,
     deposit: 1200,
-    shopType: "restaurant",
+    shopType: "korean_restaurant",
     images: [
       "https://via.placeholder.com/400x300/f5f5f5/333333?text=음식점+내부",
     ],
@@ -97,7 +97,7 @@ export const SAMPLE_VACANT_SHOPS: VacantShop[] = [
     area: 30,
     monthlyRent: 150,
     deposit: 900,
-    shopType: "etc",
+    shopType: "convenience_store",
     images: [],
     contact: {
       phone: "051-5678-9012",
@@ -133,13 +133,13 @@ export const SAMPLE_FILTERS: MapFilter[] = [
   {
     rentRange: [0, 200],
     areaRange: [10, 30],
-    shopTypes: ["restaurant", "retail"],
+    shopTypes: ["cafe", "korean_restaurant", "clothing"],
     region: "부산진구",
   },
   {
     rentRange: [100, 300],
     areaRange: [20, 50],
-    shopTypes: ["office"],
+    shopTypes: ["office", "convenience_store"],
     region: undefined,
   },
 ];

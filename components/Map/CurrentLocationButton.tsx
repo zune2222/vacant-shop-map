@@ -109,10 +109,10 @@ export default function CurrentLocationButton({
         onClick={handleClick}
         disabled={loading || !mapInstance}
         className={`
-          bg-white p-3 rounded-full shadow-lg border border-gray-200
-          hover:bg-gray-50 active:bg-gray-100
+          bg-white p-4 rounded-2xl shadow-brand border border-gray-100 touch-target
+          hover:bg-gray-50 active:bg-gray-100 hover:shadow-lg
           disabled:opacity-50 disabled:cursor-not-allowed
-          transition-all duration-200
+          transition-all duration-200 animate-scale-in
           ${loading ? "cursor-wait" : "cursor-pointer"}
         `}
         aria-label={loading ? "현재 위치를 찾는 중..." : "현재 위치로 이동"}
@@ -122,7 +122,7 @@ export default function CurrentLocationButton({
           // 로딩 스피너
           <div className="relative">
             <svg
-              className="animate-spin h-6 w-6 text-blue-500"
+              className="animate-spin h-6 w-6 text-[#6E62F6]"
               fill="none"
               viewBox="0 0 24 24"
             >
@@ -142,55 +142,46 @@ export default function CurrentLocationButton({
             </svg>
           </div>
         ) : (
-          // 위치 아이콘
+          // 위치 아이콘 (더 모던한 벡터 아이콘)
           <svg
-            className="h-6 w-6 text-blue-600"
-            fill="none"
-            stroke="currentColor"
+            className="h-6 w-6 text-[#6E62F6]"
+            fill="currentColor"
             viewBox="0 0 24 24"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-            />
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-            />
+            <path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3A8.994 8.994 0 0013 3.06V1h-2v2.06A8.994 8.994 0 003.06 11H1v2h2.06A8.994 8.994 0 0011 20.94V23h2v-2.06A8.994 8.994 0 0020.94 13H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/>
           </svg>
         )}
       </button>
 
       {/* 에러 메시지 툴팁 */}
       {error && (
-        <div className="absolute bottom-full right-0 mb-2 w-64">
-          <div className="bg-red-100 border border-red-300 text-red-800 text-sm p-3 rounded-lg shadow-lg">
+        <div className="absolute bottom-full right-0 mb-3 w-72 animate-slide-up">
+          <div className="bg-white border border-red-200 text-red-700 text-sm p-4 rounded-2xl shadow-lg">
             <div className="flex items-start">
-              <svg
-                className="w-4 h-4 text-red-500 mt-0.5 mr-2 flex-shrink-0"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"
-                />
-              </svg>
+              <div className="w-6 h-6 bg-red-100 rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
+                <svg
+                  className="w-4 h-4 text-red-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"
+                  />
+                </svg>
+              </div>
               <div>
-                <div className="font-medium mb-1">위치 정보 오류</div>
-                <div>{error}</div>
+                <div className="font-semibold mb-1 text-red-800">위치 정보 오류</div>
+                <div className="text-red-600">{error}</div>
               </div>
             </div>
             {/* 화살표 */}
-            <div className="absolute top-full right-6 -mt-1">
-              <div className="border-4 border-transparent border-t-red-300"></div>
+            <div className="absolute top-full right-6 -mt-2">
+              <div className="w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-red-200"></div>
+              <div className="absolute -top-1 left-0 w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-white"></div>
             </div>
           </div>
         </div>

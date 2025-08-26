@@ -6,13 +6,47 @@ import { BottomSheetHeight } from "./BottomSheet";
  */
 export type {
   VacantShop,
+  EnhancedVacantShop,
   ShopType,
   Contact,
   CreateVacantShopData,
   UpdateVacantShopData,
 } from "./VacantShop";
 
-export { SHOP_TYPE_LABELS, SHOP_TYPE_COLORS } from "./VacantShop";
+export { 
+  SHOP_TYPE_LABELS, 
+  SHOP_TYPE_COLORS, 
+  SHOP_TYPE_GROUPS 
+} from "./VacantShop";
+
+/**
+ * 상권 분석 관련 타입들
+ */
+export type {
+  FootTraffic,
+  MarketCharacteristics,
+  NearbyBusinesses,
+  BusinessSuccessStats,
+  MarketPrice,
+  MarketAnalysis,
+  AnalysisMetrics,
+} from "./MarketAnalysis";
+
+export { AREA_TYPE_LABELS } from "./MarketAnalysis";
+
+/**
+ * 추천 시스템 관련 타입들
+ */
+export type {
+  BusinessTypeRecommendation,
+  RentRecommendation,
+  ComprehensiveRecommendation,
+  RecommendationWeights,
+  RiskAssessment,
+  SeasonalAnalysis,
+  RecommendationFilters,
+  BusinessTypeAnalysis,
+} from "./Recommendation";
 
 /**
  * 지도 필터 관련 타입들
@@ -67,7 +101,22 @@ export {
 
 // 타입 가드 함수들
 export const isValidShopType = (type: string): type is ShopType => {
-  return ["restaurant", "retail", "office", "etc"].includes(type);
+  const validTypes: ShopType[] = [
+    // 음식점
+    "korean_restaurant", "chinese_restaurant", "japanese_restaurant", "western_restaurant",
+    "fastfood", "cafe", "bakery", "chicken", "pizza", "pub",
+    // 소매업  
+    "convenience_store", "clothing", "cosmetics", "electronics", "pharmacy",
+    "supermarket", "bookstore", "toy_store", "flower_shop",
+    // 서비스업
+    "hair_salon", "nail_salon", "fitness", "laundry", "repair_shop",
+    "real_estate", "insurance", "bank", "clinic",
+    // 업무공간
+    "office", "coworking", "academy", "consulting",
+    // 기타
+    "etc"
+  ];
+  return validTypes.includes(type as ShopType);
 };
 
 export const isValidBottomSheetHeight = (

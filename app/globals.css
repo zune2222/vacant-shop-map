@@ -5,13 +5,18 @@
 /* Custom base styles */
 @layer base {
   html {
-    font-family: Inter, sans-serif;
+    font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   
   body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+    background-color: #ffffff;
+    color: #1a1a1a;
+    line-height: 1.5;
   }
 
   /* Mobile optimizations */
@@ -21,12 +26,82 @@
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
   }
+
+  /* 전체적인 스크롤바 스타일링 */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f5f5f5;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
+  }
 }
 
 /* Custom component styles */
 @layer components {
+  /* 새로운 메인 브랜드 컬러 #6E62F6 기반 버튼 */
   .btn-primary {
-    @apply bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200;
+    @apply bg-[#6E62F6] hover:bg-[#5A4EE8] active:bg-[#4B3FD9] text-white font-medium py-3 px-6 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply bg-white hover:bg-gray-50 text-[#6E62F6] border border-[#6E62F6] font-medium py-3 px-6 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg;
+  }
+
+  .btn-ghost {
+    @apply bg-transparent hover:bg-[#6E62F6]/10 text-[#6E62F6] font-medium py-2 px-4 rounded-lg transition-all duration-200;
+  }
+
+  /* 카드 스타일 */
+  .card {
+    @apply bg-white rounded-xl shadow-md border border-gray-100 p-6 transition-all duration-200 hover:shadow-lg;
+  }
+
+  /* 입력 필드 스타일 */
+  .input-field {
+    @apply w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#6E62F6] focus:border-transparent outline-none transition-all duration-200 placeholder-gray-400;
+  }
+
+  /* 모바일 친화적인 터치 타겟 */
+  .touch-target {
+    @apply min-w-[44px] min-h-[44px] flex items-center justify-center;
+  }
+
+  /* 브랜드 그라디언트 */
+  .gradient-primary {
+    background: linear-gradient(135deg, #6E62F6 0%, #8B77FF 100%);
+  }
+
+  /* 반응형 컨테이너 */
+  .container-mobile {
+    @apply max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* 상태 배지 */
+  .badge-success {
+    @apply bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full;
+  }
+
+  .badge-warning {
+    @apply bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded-full;
+  }
+
+  .badge-error {
+    @apply bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full;
+  }
+
+  .badge-info {
+    @apply bg-[#6E62F6]/10 text-[#6E62F6] text-xs font-medium px-2.5 py-0.5 rounded-full;
   }
 }
 
@@ -42,4 +117,68 @@
     padding-left: env(safe-area-inset-left);
     padding-right: env(safe-area-inset-right);
   }
+
+  /* 텍스트 관련 유틸리티 */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* 그림자 관련 유틸리티 */
+  .shadow-soft {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  .shadow-brand {
+    box-shadow: 0 4px 16px rgba(110, 98, 246, 0.2);
+  }
+
+  /* 애니메이션 */
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.2s ease-out;
+  }
+}
+
+/* 키프레임 애니메이션 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* 포커스 관리 (접근성) */
+.focus-visible {
+  @apply ring-2 ring-[#6E62F6] ring-offset-2 outline-none;
 }

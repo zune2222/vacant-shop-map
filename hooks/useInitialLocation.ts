@@ -131,7 +131,12 @@ export const useInitialLocation = ({
       };
 
       // 지도 중심 이동 (줌은 그대로 유지)
-      if (mapInstance && window.naver && window.naver.maps) {
+      if (
+        mapInstance &&
+        typeof window !== "undefined" &&
+        window.naver &&
+        window.naver.maps
+      ) {
         const latLng = new window.naver.maps.LatLng(
           newCenter.lat,
           newCenter.lng
@@ -228,7 +233,12 @@ export const useInitialLocation = ({
         lng: position.coords.longitude,
       };
 
-      if (mapInstance && window.naver && window.naver.maps) {
+      if (
+        mapInstance &&
+        typeof window !== "undefined" &&
+        window.naver &&
+        window.naver.maps
+      ) {
         const latLng = new window.naver.maps.LatLng(
           newCenter.lat,
           newCenter.lng

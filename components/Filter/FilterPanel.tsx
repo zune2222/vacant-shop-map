@@ -51,16 +51,23 @@ export default function FilterPanel({
   };
 
   return (
-    <div className="bg-white p-4 rounded-lg space-y-6 max-h-[80vh] overflow-y-auto">
+    <div className="bg-white p-6 rounded-2xl space-y-6 max-h-[80vh] overflow-y-auto shadow-2xl animate-slide-up">
       <div className="flex justify-between items-center">
-        <h2 className="text-lg font-semibold">필터</h2>
+        <div className="flex items-center space-x-3">
+          <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
+            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
+            </svg>
+          </div>
+          <h2 className="text-xl font-bold text-gray-900">필터</h2>
+        </div>
         <button
           onClick={onClose}
-          className="text-gray-500 hover:text-gray-700 p-1"
+          className="text-gray-400 hover:text-gray-600 p-2 rounded-xl hover:bg-gray-100 touch-target transition-all duration-200"
           aria-label="닫기"
         >
           <svg
-            className="w-5 h-5"
+            className="w-6 h-6"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -75,55 +82,83 @@ export default function FilterPanel({
         </button>
       </div>
 
-      <div className="space-y-6">
-        <div>
-          <h3 className="font-medium mb-3">월 임대료 범위</h3>
-          <RangeSlider
-            min={0}
-            max={1000}
-            step={10}
-            value={filters.rentRange}
-            onChange={handleRentChange}
-            formatValue={(value) => `${value}만원`}
-          />
+      <div className="space-y-8">
+        <div className="space-y-4">
+          <div className="flex items-center space-x-2">
+            <svg className="w-5 h-5 text-[#6E62F6]" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+            </svg>
+            <h3 className="font-semibold text-gray-900">월 임대료 범위</h3>
+          </div>
+          <div className="bg-gray-50 p-4 rounded-xl">
+            <RangeSlider
+              min={0}
+              max={1000}
+              step={10}
+              value={filters.rentRange}
+              onChange={handleRentChange}
+              formatValue={(value) => `${value}만원`}
+            />
+          </div>
         </div>
 
-        <div>
-          <h3 className="font-medium mb-3">면적 범위</h3>
-          <RangeSlider
-            min={0}
-            max={100}
-            step={1}
-            value={filters.areaRange}
-            onChange={handleAreaChange}
-            formatValue={(value) => `${value}평`}
-          />
+        <div className="space-y-4">
+          <div className="flex items-center space-x-2">
+            <svg className="w-5 h-5 text-[#6E62F6]" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M19 7h-3V6a4 4 0 0 0-8 0v1H5a1 1 0 0 0-1 1v11a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V8a1 1 0 0 0-1-1zM10 6a2 2 0 0 1 4 0v1h-4V6zm8 13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V9h2v1a1 1 0 0 0 2 0V9h4v1a1 1 0 0 0 2 0V9h2v10z"/>
+            </svg>
+            <h3 className="font-semibold text-gray-900">면적 범위</h3>
+          </div>
+          <div className="bg-gray-50 p-4 rounded-xl">
+            <RangeSlider
+              min={0}
+              max={100}
+              step={1}
+              value={filters.areaRange}
+              onChange={handleAreaChange}
+              formatValue={(value) => `${value}평`}
+            />
+          </div>
         </div>
 
-        <div>
-          <h3 className="font-medium mb-3">상가 유형</h3>
-          <ShopTypeSelector
-            selected={filters.shopTypes}
-            onChange={handleShopTypesChange}
-          />
+        <div className="space-y-4">
+          <div className="flex items-center space-x-2">
+            <svg className="w-5 h-5 text-[#6E62F6]" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+            <h3 className="font-semibold text-gray-900">상가 유형</h3>
+          </div>
+          <div className="bg-gray-50 p-4 rounded-xl">
+            <ShopTypeSelector
+              selected={filters.shopTypes}
+              onChange={handleShopTypesChange}
+            />
+          </div>
         </div>
 
-        <div>
-          <h3 className="font-medium mb-3">지역 검색</h3>
-          <RegionSearch value={filters.region} onChange={handleRegionChange} />
+        <div className="space-y-4">
+          <div className="flex items-center space-x-2">
+            <svg className="w-5 h-5 text-[#6E62F6]" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+            </svg>
+            <h3 className="font-semibold text-gray-900">지역 검색</h3>
+          </div>
+          <div className="bg-gray-50 p-4 rounded-xl">
+            <RegionSearch value={filters.region} onChange={handleRegionChange} />
+          </div>
         </div>
       </div>
 
-      <div className="flex space-x-2 pt-4 border-t border-gray-200">
+      <div className="flex space-x-3 pt-6 border-t border-gray-100">
         <button
           onClick={handleReset}
-          className="flex-1 py-3 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition-colors"
+          className="btn-secondary flex-1"
         >
           초기화
         </button>
         <button
           onClick={handleApply}
-          className="flex-1 py-3 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition-colors"
+          className="btn-primary flex-1"
         >
           적용하기
         </button>

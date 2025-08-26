@@ -25,6 +25,9 @@ export default function MapContainer({ className = "" }: MapContainerProps) {
   // Naver Maps 스크립트 로드
   useEffect(() => {
     const loadScript = async () => {
+      // 클라이언트 사이드에서만 실행
+      if (typeof window === "undefined") return;
+
       try {
         setLoading(true);
         await loadNaverMapsScript();

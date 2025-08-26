@@ -1,15 +1,29 @@
 <svg width="40" height="50" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- 마커 배경 (파란색) -->
-  <path d="M20 2C11.163 2 4 9.163 4 18C4 30 20 46 20 46S36 30 36 18C36 9.163 28.837 2 20 2Z" fill="#3b82f6" stroke="#2563eb" stroke-width="2"/>
+  <!-- 그라디언트 정의 -->
+  <defs>
+    <linearGradient id="retailGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6E62F6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8B77FF;stop-opacity:1" />
+    </linearGradient>
+    <filter id="retailShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="2" flood-color="#6E62F6" flood-opacity="0.3" stdDeviation="2"/>
+    </filter>
+  </defs>
   
-  <!-- 소매업 아이콘 (쇼핑백) -->
-  <g transform="translate(20, 18)" stroke="white" stroke-width="2" fill="none">
+  <!-- 마커 배경 (브랜드 그라디언트) -->
+  <path d="M20 2C11.163 2 4 9.163 4 18C4 30 20 46 20 46S36 30 36 18C36 9.163 28.837 2 20 2Z" 
+        fill="url(#retailGradient)" stroke="#5A4EE8" stroke-width="1.5" filter="url(#retailShadow)"/>
+  
+  <!-- 소매업 아이콘 (현대적인 쇼핑백) -->
+  <g transform="translate(20, 18)">
     <!-- 쇼핑백 본체 -->
-    <rect x="-6" y="-2" width="12" height="10" rx="1"/>
+    <rect x="-6" y="-2" width="12" height="10" rx="2" stroke="white" stroke-width="2" fill="white" fill-opacity="0.2"/>
     <!-- 손잡이 -->
-    <path d="M-3 -2 C-3 -5 -1 -7 2 -7 C5 -7 7 -5 7 -2"/>
+    <path d="M-3 -2 C-3 -5 -1 -7 2 -7 C5 -7 7 -5 7 -2" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <!-- 장식적인 요소 (쇼핑백 브랜드 마크) -->
+    <circle cx="0" cy="3" r="1.5" fill="white" fill-opacity="0.8"/>
   </g>
   
-  <!-- 그림자 -->
-  <ellipse cx="20" cy="47" rx="8" ry="3" fill="black" fill-opacity="0.2"/>
+  <!-- 부드러운 그림자 -->
+  <ellipse cx="20" cy="47" rx="6" ry="2" fill="#6E62F6" fill-opacity="0.15"/>
 </svg> 

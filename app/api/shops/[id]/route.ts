@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { SAMPLE_VACANT_SHOPS } from "@/lib/sampleData";
+import { ENHANCED_SAMPLE_SHOPS } from "@/lib/enhancedSampleData";
 
 // 동적 라우트 설정 (params 사용으로 인한 prerender 에러 해결)
 export const dynamic = "force-dynamic";
@@ -11,8 +11,8 @@ export async function GET(
   try {
     const shopId = params.id;
 
-    // Mock 데이터에서 해당 ID의 상가 찾기
-    const shop = SAMPLE_VACANT_SHOPS.find((s) => s.id === shopId);
+    // Enhanced 데이터에서 해당 ID의 상가 찾기
+    const shop = ENHANCED_SAMPLE_SHOPS.find((s) => s.id === shopId);
 
     if (!shop) {
       return NextResponse.json(

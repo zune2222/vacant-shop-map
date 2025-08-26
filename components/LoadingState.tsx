@@ -8,16 +8,16 @@ export default function LoadingState({
   size = "md",
 }: LoadingStateProps) {
   const sizeClasses = {
-    sm: "w-4 h-4",
-    md: "w-8 h-8",
-    lg: "w-12 h-12",
+    sm: "w-6 h-6",
+    md: "w-10 h-10",
+    lg: "w-16 h-16",
   };
 
   return (
-    <div className="flex flex-col items-center justify-center p-8">
+    <div className="flex flex-col items-center justify-center p-8 animate-fade-in">
       <div className={`${sizeClasses[size]} animate-spin`}>
         <svg
-          className="w-full h-full text-primary-600"
+          className="w-full h-full text-[#6E62F6]"
           fill="none"
           viewBox="0 0 24 24"
         >
@@ -36,7 +36,14 @@ export default function LoadingState({
           />
         </svg>
       </div>
-      <p className="mt-4 text-sm text-gray-600 text-center">{message}</p>
+      <div className="mt-6 text-center">
+        <p className="text-lg font-medium text-gray-900 mb-2">{message}</p>
+        <div className="flex items-center justify-center space-x-1">
+          <div className="w-2 h-2 bg-[#6E62F6] rounded-full animate-pulse"></div>
+          <div className="w-2 h-2 bg-[#6E62F6] rounded-full animate-pulse" style={{ animationDelay: '0.1s' }}></div>
+          <div className="w-2 h-2 bg-[#6E62F6] rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+        </div>
+      </div>
     </div>
   );
 }

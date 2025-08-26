@@ -1,5 +1,6 @@
-import { VacantShop, MapFilter } from "@/types";
+import { VacantShop, MapFilter, EnhancedVacantShop } from "@/types";
 import { SAMPLE_VACANT_SHOPS, filterVacantShops } from "@/lib/sampleData";
+import { ENHANCED_SAMPLE_SHOPS } from "@/lib/enhancedSampleData";
 import apiClient, { ApiResponse, ApiError } from "./axios";
 import { CachedAPIService, dataCache } from "@/lib/performance/DataCache";
 import { PerformanceMonitor } from "@/lib/performance/MapOptimizations";
@@ -235,19 +236,44 @@ export class VacantShopService {
   private getMockShops(
     options: VacantShopQueryOptions
   ): PaginatedResponse<VacantShop> {
-    let shops = [...SAMPLE_VACANT_SHOPS];
+    // 확장된 샘플 데이터 사용 (150개) - 예측 데이터 포함
+    let shops = ENHANCED_SAMPLE_SHOPS.map((shop) => ({
+      id: shop.id,
+      name: shop.name,
+      address: shop.address,
+      latitude: shop.latitude,
+      longitude: shop.longitude,
+      area: shop.area,
+      monthlyRent: shop.monthlyRent,
+      deposit: shop.deposit,
+      shopType: shop.shopType,
+      images: shop.images,
+      contact: shop.contact,
+      description: shop.description,
+      availableFrom: shop.availableFrom,
+      features: shop.features,
+      createdAt: shop.createdAt,
+      updatedAt: shop.updatedAt,
+    })) as VacantShop[];
 
-    // 필터 적용
-    if (options.filter) {
+    // 필터 적용 (실제 필터가 설정되었을 때만 적용)
+    if (
+      options.filter &&
+      options.filter.rentRange &&
+      options.filter.areaRange &&
+      options.filter.shopTypes &&
+      options.filter.shopTypes.length > 0 &&
+      (options.filter.rentRange[0] !== 0 ||
+        options.filter.rentRange[1] !== 1000 ||
+        options.filter.areaRange[0] !== 0 ||
+        options.filter.areaRange[1] !== 100 ||
+        options.filter.region ||
+        options.filter.shopTypes.length !== 33) // 모든 상가 유형이 선택되지 않았을 때만 필터 적용
+    ) {
       const filter: MapFilter = {
-        rentRange: options.filter.rentRange || [0, 1000],
-        areaRange: options.filter.areaRange || [0, 100],
-        shopTypes: options.filter.shopTypes || [
-          "restaurant",
-          "retail",
-          "office",
-          "etc",
-        ],
+        rentRange: options.filter.rentRange,
+        areaRange: options.filter.areaRange,
+        shopTypes: options.filter.shopTypes,
         region: options.filter.region,
       };
       shops = filterVacantShops(shops, filter);
@@ -286,6 +312,31 @@ export class VacantShopService {
     const limit = options.limit || 20;
     const offset = options.offset || 0;
     const paginatedShops = shops.slice(offset, offset + limit);
+
+    // 디버깅 로그
+    console.log("🔍 API Response:", {
+      totalShops: shops.length,
+      returnedShops: paginatedShops.length,
+      limit,
+      offset,
+      filterApplied: options.filter ? "YES" : "NO",
+      shopTypes: options.filter?.shopTypes?.length || 0,
+      filterDetails: options.filter
+        ? {
+            rentRange: options.filter.rentRange,
+            areaRange: options.filter.areaRange,
+            shopTypesLength: options.filter.shopTypes?.length,
+            region: options.filter.region,
+            isDefaultFilter:
+              options.filter.rentRange?.[0] === 0 &&
+              options.filter.rentRange?.[1] === 1000 &&
+              options.filter.areaRange?.[0] === 0 &&
+              options.filter.areaRange?.[1] === 100 &&
+              options.filter.shopTypes?.length === 33 &&
+              !options.filter.region,
+          }
+        : "NO_FILTER",
+    });
 
     return {
       items: paginatedShops,

@@ -87,17 +87,61 @@ export default function MarkerManager({
 
   // 상가 유형별 마커 아이콘 경로 반환
   const getMarkerIconPath = useCallback((shopType: string): string => {
-    switch (shopType) {
-      case "restaurant":
-        return "/markers/restaurant.svg";
-      case "retail":
-        return "/markers/retail.svg";
-      case "office":
-        return "/markers/office.svg";
-      case "etc":
-      default:
-        return "/markers/etc.svg";
+    // 음식점 카테고리
+    if (
+      [
+        "korean_restaurant",
+        "chinese_restaurant",
+        "japanese_restaurant",
+        "western_restaurant",
+        "fastfood",
+        "cafe",
+        "bakery",
+        "chicken",
+        "pizza",
+        "pub",
+      ].includes(shopType)
+    ) {
+      return "/markers/restaurant.svg";
     }
+    // 소매업 카테고리
+    if (
+      [
+        "convenience_store",
+        "clothing",
+        "cosmetics",
+        "electronics",
+        "pharmacy",
+        "supermarket",
+        "bookstore",
+        "toy_store",
+        "flower_shop",
+      ].includes(shopType)
+    ) {
+      return "/markers/retail.svg";
+    }
+    // 업무공간 카테고리
+    if (["office", "coworking", "academy", "consulting"].includes(shopType)) {
+      return "/markers/office.svg";
+    }
+    // 서비스업 카테고리
+    if (
+      [
+        "hair_salon",
+        "nail_salon",
+        "fitness",
+        "laundry",
+        "repair_shop",
+        "real_estate",
+        "insurance",
+        "bank",
+        "clinic",
+      ].includes(shopType)
+    ) {
+      return "/markers/retail.svg";
+    }
+    // 기타
+    return "/markers/etc.svg";
   }, []);
 
   // 클러스터 아이콘 생성 - 안전성 검사 추가

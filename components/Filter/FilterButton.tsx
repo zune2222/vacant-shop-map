@@ -13,18 +13,20 @@ export default function FilterButton({
     <button
       onClick={onClick}
       className={`
-        absolute top-4 right-4 z-10
-        bg-white shadow-lg rounded-full p-3
-        border border-gray-200
+        absolute top-4 right-4 z-10 touch-target
+        bg-white shadow-brand rounded-2xl p-4
+        border border-gray-100
         hover:bg-gray-50 active:bg-gray-100
-        transition-colors duration-200
-        ${hasActiveFilters ? "ring-2 ring-blue-500" : ""}
+        transition-all duration-200 animate-scale-in
+        ${hasActiveFilters ? "ring-2 ring-[#6E62F6] shadow-lg" : "shadow-soft"}
       `}
       aria-label="필터 열기"
     >
       <div className="relative">
         <svg
-          className="w-6 h-6 text-gray-700"
+          className={`w-6 h-6 transition-colors duration-200 ${
+            hasActiveFilters ? "text-[#6E62F6]" : "text-gray-700"
+          }`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -37,7 +39,9 @@ export default function FilterButton({
           />
         </svg>
         {hasActiveFilters && (
-          <div className="absolute -top-1 -right-1 w-3 h-3 bg-blue-500 rounded-full"></div>
+          <div className="absolute -top-1 -right-1 w-4 h-4 bg-[#6E62F6] rounded-full flex items-center justify-center">
+            <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+          </div>
         )}
       </div>
     </button>

@@ -16,7 +16,46 @@ export interface MapFilter {
 export const DEFAULT_FILTER: MapFilter = {
   rentRange: [0, 1000], // 0~1000만원
   areaRange: [0, 100], // 0~100평
-  shopTypes: ["restaurant", "retail", "office", "etc"], // 모든 유형 선택
+  shopTypes: [
+    // 음식점 카테고리
+    "korean_restaurant",
+    "chinese_restaurant",
+    "japanese_restaurant",
+    "western_restaurant",
+    "fastfood",
+    "cafe",
+    "bakery",
+    "chicken",
+    "pizza",
+    "pub",
+    // 소매업 카테고리
+    "convenience_store",
+    "clothing",
+    "cosmetics",
+    "electronics",
+    "pharmacy",
+    "supermarket",
+    "bookstore",
+    "toy_store",
+    "flower_shop",
+    // 서비스업 카테고리
+    "hair_salon",
+    "nail_salon",
+    "fitness",
+    "laundry",
+    "repair_shop",
+    "real_estate",
+    "insurance",
+    "bank",
+    "clinic",
+    // 업무공간 카테고리
+    "office",
+    "coworking",
+    "academy",
+    "consulting",
+    // 기타
+    "etc",
+  ], // 모든 유형 선택
   region: undefined,
 };
 
